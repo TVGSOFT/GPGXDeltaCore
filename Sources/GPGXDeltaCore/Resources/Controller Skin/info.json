@@ -3,6 +3,10 @@
   "identifier": "com.delta.genesis.standard",
   "gameTypeIdentifier": "com.rileytestut.delta.game.genesis",
   "debug": false,
+  "previewImages": {
+    "portrait": "preview_portrait.png",
+    "landscape": "preview_landscape.png"
+  },
   "representations": {
     "iphone": {
       "standard": {
@@ -10,97 +14,115 @@
           "assets": {
             "resizable": "iphone_portrait.pdf"
           },
-                    "items": [
-                        {
-                            "inputs": {
-                                "up": "up",
-                                "down": "down",
-                                "left": "left",
-                                "right": "right"
-                            },
-                            "frame": {
-                                "x": 25,
-                                "y": 70,
-                                "width": 99,
-                                "height": 99
-                            },
-                            "extendedEdges": {
-                                "top": 25,
-                                "bottom": 25,
-                                "left": 25,
-                                "right": 25
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "a"
-                            ],
-                            "frame": {
-                                "x": 167,
-                                "y": 132,
-                                "width": 41,
-                                "height": 41
-                            },
-                            "extendedEdges": {
-                                "right": 2
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "b"
-                            ],
-                            "frame": {
-                                "x": 212,
-                                "y": 108,
-                                "width": 41,
-                                "height": 41
-                            },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 3
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "c"
-                            ],
-                            "frame": {
-                                "x": 258,
-                                "y": 90,
-                                "width": 41,
-                                "height": 41
-                            },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 21
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "start"
-                            ],
-                            "frame": {
-                                "x": 178,
-                                "y": 48,
-                                "width": 47,
-                                "height": 28
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "menu"
-                            ],
-                            "frame": {
-                                "x": 10,
-                                "y": 219,
-                                "width": 22,
-                                "height": 22
-                            },
-                            "extendedEdges": {
-                                "right": 30
-                            }
-                        }
-                    ],
+          "items": [
+            {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
+              "inputs": {
+                "up": "up",
+                "down": "down",
+                "left": "left",
+                "right": "right"
+              },
+              "frame": {
+                "x": 15,
+                "y": 59,
+                "width": 120,
+                "height": 120
+              },
+              "extendedEdges": {
+                "top": 10,
+                "bottom": 10,
+                "left": 10,
+                "right": 10
+              }
+            },
+            {
+              "asset": {
+                "normal": "a.pdf"
+              },
+              "inputs": [
+                "a"
+              ],
+              "frame": {
+                "x": 167,
+                "y": 132,
+                "width": 41,
+                "height": 41
+              },
+              "extendedEdges": {
+                "right": 2
+              }
+            },
+            {
+              "asset": {
+                "normal": "b.pdf"
+              },
+              "inputs": [
+                "b"
+              ],
+              "frame": {
+                "x": 212,
+                "y": 108,
+                "width": 41,
+                "height": 41
+              },
+              "extendedEdges": {
+                "left": 2,
+                "right": 3
+              }
+            },
+            {
+              "asset": {
+                "normal": "c.pdf"
+              },
+              "inputs": [
+                "c"
+              ],
+              "frame": {
+                "x": 258,
+                "y": 90,
+                "width": 41,
+                "height": 41
+              },
+              "extendedEdges": {
+                "left": 2,
+                "right": 21
+              }
+            },
+            {
+              "asset": {
+                "normal": "start.pdf"
+              },
+              "inputs": [
+                "start"
+              ],
+              "frame": {
+                "x": 178,
+                "y": 48,
+                "width": 47,
+                "height": 28
+              }
+            },
+            {
+              "asset": {
+                "normal": "menu.pdf"
+              },
+              "inputs": [
+                "menu"
+              ],
+              "frame": {
+                "x": 10,
+                "y": 219,
+                "width": 22,
+                "height": 22
+              },
+              "extendedEdges": {
+                "right": 30
+              }
+            }
+          ],
           "mappingSize": {
             "width": 320,
             "height": 254
@@ -118,6 +140,9 @@
           },
           "items": [
             {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
               "inputs": {
                 "up": "up",
                 "down": "down",
@@ -125,19 +150,22 @@
                 "right": "right"
               },
               "frame": {
-                "x": 32,
-                "y": 188,
-                "width": 99,
-                "height": 99
+                "x": 31,
+                "y": 165,
+                "width": 130,
+                "height": 130
               },
               "extendedEdges": {
                 "top": 30,
-                "bottom": 35,
+                "bottom": 30,
                 "left": 50,
                 "right": 30
               }
             },
             {
+              "asset": {
+                "normal": "a.pdf"
+              },
               "inputs": [
                 "a"
               ],
@@ -153,6 +181,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "b.pdf"
+              },
               "inputs": [
                 "b"
               ],
@@ -168,6 +199,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "c.pdf"
+              },
               "inputs": [
                 "c"
               ],
@@ -183,6 +217,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "start_landscape.pdf"
+              },
               "inputs": [
                 "start"
               ],
@@ -197,6 +234,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "menu_landscape.pdf"
+              },
               "inputs": [
                 "menu"
               ],
@@ -232,6 +272,9 @@
           },
           "items": [
             {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
               "inputs": {
                 "up": "up",
                 "down": "down",
@@ -239,19 +282,22 @@
                 "right": "right"
               },
               "frame": {
-                "x": 25,
-                "y": 70,
-                "width": 99,
-                "height": 99
+                "x": 17,
+                "y": 69,
+                "width": 120,
+                "height": 120
               },
-                            "extendedEdges": {
-                                "top": 25,
-                                "bottom": 25,
-                                "left": 25,
-                                "right": 25
-                            }
+              "extendedEdges": {
+                "top": 10,
+                "bottom": 10,
+                "left": 10,
+                "right": 10
+              }
             },
             {
+              "asset": {
+                "normal": "a.pdf"
+              },
               "inputs": [
                 "a"
               ],
@@ -261,11 +307,14 @@
                 "width": 41,
                 "height": 41
               },
-                            "extendedEdges": {
-                                "right": 2
-                            }
+              "extendedEdges": {
+                "right": 2
+              }
             },
             {
+              "asset": {
+                "normal": "b.pdf"
+              },
               "inputs": [
                 "b"
               ],
@@ -275,12 +324,15 @@
                 "width": 41,
                 "height": 41
               },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 3
-                            }
+              "extendedEdges": {
+                "left": 2,
+                "right": 3
+              }
             },
             {
+              "asset": {
+                "normal": "c.pdf"
+              },
               "inputs": [
                 "c"
               ],
@@ -290,12 +342,15 @@
                 "width": 41,
                 "height": 41
               },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 21
-                            }
+              "extendedEdges": {
+                "left": 2,
+                "right": 21
+              }
             },
             {
+              "asset": {
+                "normal": "start.pdf"
+              },
               "inputs": [
                 "start"
               ],
@@ -307,6 +362,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "menu.pdf"
+              },
               "inputs": [
                 "menu"
               ],
@@ -316,9 +374,9 @@
                 "width": 22,
                 "height": 22
               },
-                            "extendedEdges": {
-                                "right": 30
-                            }
+              "extendedEdges": {
+                "right": 30
+              }
             }
           ],
           "mappingSize": {
@@ -338,6 +396,9 @@
           },
           "items": [
             {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
               "inputs": {
                 "up": "up",
                 "down": "down",
@@ -345,19 +406,22 @@
                 "right": "right"
               },
               "frame": {
-                "x": 50,
-                "y": 188,
-                "width": 99,
-                "height": 99
+                "x": 38,
+                "y": 141,
+                "width": 150,
+                "height": 150
               },
               "extendedEdges": {
                 "top": 30,
                 "bottom": 35,
-                "left": 50,
+                "left": 30,
                 "right": 30
               }
             },
             {
+              "asset": {
+                "normal": "a.pdf"
+              },
               "inputs": [
                 "a"
               ],
@@ -373,6 +437,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "b.pdf"
+              },
               "inputs": [
                 "b"
               ],
@@ -388,6 +455,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "c.pdf"
+              },
               "inputs": [
                 "c"
               ],
@@ -403,6 +473,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "start_landscape.pdf"
+              },
               "inputs": [
                 "start"
               ],
@@ -417,6 +490,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "menu_landscape.pdf"
+              },
               "inputs": [
                 "menu"
               ],
@@ -452,98 +528,116 @@
           "assets": {
             "resizable": "ipad_portrait.pdf"
           },
-                    "items": [
-                        {
-                            "inputs": {
-                                "up": "up",
-                                "down": "down",
-                                "left": "left",
-                                "right": "right"
-                            },
-                            "frame": {
-                                "x": 87,
-                                "y": 112,
-                                "width": 178,
-                                "height": 178
-                            },
-                            "extendedEdges": {
-                                "top": 40,
-                                "bottom": 40,
-                                "left": 60,
-                                "right": 40
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "a"
-                            ],
-                            "frame": {
-                                "x": 709,
-                                "y": 230,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 30,
-                                "right": 2
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "b"
-                            ],
-                            "frame": {
-                                "x": 788,
-                                "y": 187,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 5
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "c"
-                            ],
-                            "frame": {
-                                "x": 872,
-                                "y": 154,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 4,
-                                "right": 50
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "start"
-                            ],
-                            "frame": {
-                                "x": 733,
-                                "y": 88,
-                                "width": 82,
-                                "height": 49
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "menu"
-                            ],
-                            "frame": {
-                                "x": 50,
-                                "y": 350,
-                                "width": 40,
-                                "height": 40
-                            },
-                            "extendedEdges": {
-                                "right": 60
-                            }
-                        }
-                    ],
+          "items": [
+            {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
+              "inputs": {
+                "up": "up",
+                "down": "down",
+                "left": "left",
+                "right": "right"
+              },
+              "frame": {
+                "x": 73,
+                "y": 111,
+                "width": 200,
+                "height": 200
+              },
+              "extendedEdges": {
+                "top": 40,
+                "bottom": 40,
+                "left": 60,
+                "right": 40
+              }
+            },
+            {
+              "asset": {
+                "normal": "a.pdf"
+              },
+              "inputs": [
+                "a"
+              ],
+              "frame": {
+                "x": 709,
+                "y": 230,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 30,
+                "right": 2
+              }
+            },
+            {
+              "asset": {
+                "normal": "b.pdf"
+              },
+              "inputs": [
+                "b"
+              ],
+              "frame": {
+                "x": 788,
+                "y": 187,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 2,
+                "right": 5
+              }
+            },
+            {
+              "asset": {
+                "normal": "c.pdf"
+              },
+              "inputs": [
+                "c"
+              ],
+              "frame": {
+                "x": 872,
+                "y": 154,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 4,
+                "right": 50
+              }
+            },
+            {
+              "asset": {
+                "normal": "start_ipad.pdf"
+              },
+              "inputs": [
+                "start"
+              ],
+              "frame": {
+                "x": 733,
+                "y": 88,
+                "width": 82,
+                "height": 49
+              }
+            },
+            {
+              "asset": {
+                "normal": "menu.pdf"
+              },
+              "inputs": [
+                "menu"
+              ],
+              "frame": {
+                "x": 50,
+                "y": 350,
+                "width": 40,
+                "height": 40
+              },
+              "extendedEdges": {
+                "right": 60
+              }
+            }
+          ],
           "mappingSize": {
             "width": 1024,
             "height": 429
@@ -561,6 +655,9 @@
           },
           "items": [
             {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
               "inputs": {
                 "up": "up",
                 "down": "down",
@@ -570,8 +667,8 @@
               "frame": {
                 "x": 96,
                 "y": 749,
-                "width": 179,
-                "height": 179
+                "width": 220,
+                "height": 220
               },
               "extendedEdges": {
                 "left": 100,
@@ -581,6 +678,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "a.pdf"
+              },
               "inputs": [
                 "a"
               ],
@@ -596,6 +696,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "b.pdf"
+              },
               "inputs": [
                 "b"
               ],
@@ -611,6 +714,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "c.pdf"
+              },
               "inputs": [
                 "c"
               ],
@@ -626,6 +732,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "start_landscape.pdf"
+              },
               "inputs": [
                 "start"
               ],
@@ -637,6 +746,9 @@
               }
             },
             {
+              "asset": {
+                "normal": "menu_landscape.pdf"
+              },
               "inputs": [
                 "menu"
               ],
@@ -672,6 +784,9 @@
           },
           "items": [
             {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
               "inputs": {
                 "up": "up",
                 "down": "down",
@@ -679,147 +794,110 @@
                 "right": "right"
               },
               "frame": {
-                "x": 56,
-                "y": 106,
-                "width": 156,
-                "height": 156
+                "x": 33,
+                "y": 57,
+                "width": 200,
+                "height": 200
               },
               "extendedEdges": {
                 "top": 30,
-                "bottom": 73,
-                "left": 60,
+                "bottom": 10,
+                "left": 30,
                 "right": 30
               }
             },
             {
+              "asset": {
+                "normal": "a.pdf"
+              },
               "inputs": [
                 "a"
               ],
               "frame": {
-                "x": 700,
-                "y": 157,
-                "width": 55,
-                "height": 55
+                "x": 559,
+                "y": 180,
+                "width": 60,
+                "height": 60
               },
               "extendedEdges": {
                 "top": 10,
                 "bottom": 10,
                 "left": 0,
-                "right": 45
+                "right": 5
               }
             },
             {
+              "asset": {
+                "normal": "b.pdf"
+              },
               "inputs": [
                 "b"
               ],
               "frame": {
-                "x": 635,
-                "y": 207,
-                "width": 55,
-                "height": 55
+                "x": 614,
+                "y": 145,
+                "width": 60,
+                "height": 60
               },
               "extendedEdges": {
-                "top": 0,
-                "bottom": 73,
-                "left": 10,
-                "right": 10
+                "top": 5,
+                "bottom": 5,
+                "left": 5,
+                "right": 5
               }
             },
             {
+              "asset": {
+                "normal": "c.pdf"
+              },
               "inputs": [
                 "c"
               ],
               "frame": {
-                "x": 0,
-                "y": 0,
-                "width": 167,
-                "height": 45
+                "x": 672,
+                "y": 119,
+                "width": 60,
+                "height": 60
+              },
+              "extendedEdges": {
+                "top": 5,
+                "left": 5,
+                "bottom": 5,
+                "right": 5
               }
             },
             {
-              "inputs": [
-                "z"
-              ],
-              "frame": {
-                "x": 633,
-                "y": 0,
-                "width": 167,
-                "height": 45
-              }
-            },
-            {
+              "asset": {
+                "normal": "start_ipad.pdf"
+              },
               "inputs": [
                 "start"
               ],
               "frame": {
-                "x": 442,
-                "y": 218,
+                "x": 576,
+                "y": 68,
                 "width": 60,
-                "height": 53
+                "height": 40
               },
               "extendedEdges": {
                 "left": 8
               }
             },
             {
-              "inputs": [
-                "select"
-              ],
-              "frame": {
-                "x": 366,
-                "y": 218,
-                "width": 60,
-                "height": 53
+              "asset": {
+                "normal": "menu.pdf"
               },
-              "extendedEdges": {
-                "left": 8,
-                "right": 8
-              }
-            },
-            {
               "inputs": [
                 "menu"
               ],
               "frame": {
-                "x": 290,
-                "y": 218,
-                "width": 60,
-                "height": 53
+                "x": 34,
+                "y": 270,
+                "width": 35,
+                "height": 35
               },
               "extendedEdges": {
-                "right": 8
-              }
-            },
-            {
-              "inputs": [
-                "y"
-              ],
-              "frame": {
-                "x": 570,
-                "y": 156,
-                "width": 55,
-                "height": 55
-              },
-              "extendedEdges": {
-                "top": 10,
-                "bottom": 10,
-                "right": 0
-              }
-            },
-            {
-              "inputs": [
-                "x"
-              ],
-              "frame": {
-                "x": 635,
-                "y": 106,
-                "width": 55,
-                "height": 55
-              },
-              "extendedEdges": {
-                "bottom": 0,
-                "left": 10,
-                "right": 10
+                "right": 50
               }
             }
           ],
@@ -838,98 +916,116 @@
           "assets": {
             "resizable": "ipad_landscape_splitview.pdf"
           },
-                    "items": [
-                        {
-                            "inputs": {
-                                "up": "up",
-                                "down": "down",
-                                "left": "left",
-                                "right": "right"
-                            },
-                            "frame": {
-                                "x": 97,
-                                "y": 112,
-                                "width": 178,
-                                "height": 178
-                            },
-                            "extendedEdges": {
-                                "top": 40,
-                                "bottom": 40,
-                                "left": 60,
-                                "right": 40
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "a"
-                            ],
-                            "frame": {
-                                "x": 1041,
-                                "y": 230,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 30,
-                                "right": 2
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "b"
-                            ],
-                            "frame": {
-                                "x": 1120,
-                                "y": 187,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 2,
-                                "right": 5
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "c"
-                            ],
-                            "frame": {
-                                "x": 1204,
-                                "y": 154,
-                                "width": 75,
-                                "height": 75
-                            },
-                            "extendedEdges": {
-                                "left": 4,
-                                "right": 50
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "start"
-                            ],
-                            "frame": {
-                                "x": 1065,
-                                "y": 88,
-                                "width": 82,
-                                "height": 49
-                            }
-                        },
-                        {
-                            "inputs": [
-                                "menu"
-                            ],
-                            "frame": {
-                                "x": 60,
-                                "y": 350,
-                                "width": 40,
-                                "height": 40
-                            },
-                            "extendedEdges": {
-                                "right": 60
-                            }
-                        }
-                    ],
+          "items": [
+            {
+              "asset": {
+                "normal": "dpad.pdf"
+              },
+              "inputs": {
+                "up": "up",
+                "down": "down",
+                "left": "left",
+                "right": "right"
+              },
+              "frame": {
+                "x": 80,
+                "y": 80,
+                "width": 220,
+                "height": 220
+              },
+              "extendedEdges": {
+                "top": 40,
+                "bottom": 40,
+                "left": 60,
+                "right": 40
+              }
+            },
+            {
+              "asset": {
+                "normal": "a.pdf"
+              },
+              "inputs": [
+                "a"
+              ],
+              "frame": {
+                "x": 1041,
+                "y": 230,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 30,
+                "right": 2
+              }
+            },
+            {
+              "asset": {
+                "normal": "b.pdf"
+              },
+              "inputs": [
+                "b"
+              ],
+              "frame": {
+                "x": 1120,
+                "y": 187,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 2,
+                "right": 5
+              }
+            },
+            {
+              "asset": {
+                "normal": "c.pdf"
+              },
+              "inputs": [
+                "c"
+              ],
+              "frame": {
+                "x": 1204,
+                "y": 154,
+                "width": 75,
+                "height": 75
+              },
+              "extendedEdges": {
+                "left": 4,
+                "right": 50
+              }
+            },
+            {
+              "asset": {
+                "normal": "start_ipad.pdf"
+              },
+              "inputs": [
+                "start"
+              ],
+              "frame": {
+                "x": 1067,
+                "y": 88,
+                "width": 82,
+                "height": 49
+              }
+            },
+            {
+              "asset": {
+                "normal": "menu.pdf"
+              },
+              "inputs": [
+                "menu"
+              ],
+              "frame": {
+                "x": 60,
+                "y": 350,
+                "width": 40,
+                "height": 40
+              },
+              "extendedEdges": {
+                "right": 60
+              }
+            }
+          ],
           "mappingSize": {
             "width": 1366,
             "height": 429
