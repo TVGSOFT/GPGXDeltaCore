@@ -38,6 +38,10 @@ int GPGXGameSaveSize = 0x10000;
 @property (nonatomic, readonly) NSMutableData *audioBuffer;
 @property (nonatomic, readonly) NSMutableData *videoBuffer;
 
+// NO until a ROM is loaded and audio/system are initialised. Running a frame without a
+// loaded game dereferences NULL blip buffers in sound_update (Crashlytics f333d4cc).
+@property (nonatomic, assign, getter=isGameLoaded) BOOL gameLoaded;
+
 @end
 
 @implementation GPGXEmulatorBridge
@@ -72,6 +76,8 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)startWithGameURL:(NSURL *)gameURL
 {
+    self.gameLoaded = NO;
+    
     set_config_defaults();
     
     /* initialize bitmap */
@@ -87,14 +93,23 @@ int GPGXGameSaveSize = 0x10000;
         return;
     }
     
-    audio_init(48000, vdp_pal ? GPGXFramesPerSecondPAL : GPGXFramesPerSecondNTSC);
+    if (audio_init(48000, vdp_pal ? GPGXFramesPerSecondPAL : GPGXFramesPerSecondNTSC) != 0)
+    {
+        NSLog(@"Failed to initialize audio for ROM: %@", gameURL);
+        audio_shutdown();
+        return;
+    }
     
     system_init();
     system_reset();
+    
+    self.gameLoaded = YES;
 }
 
 - (void)stop
 {
+    self.gameLoaded = NO;
+    
     audio_shutdown();
 }
 
@@ -110,6 +125,11 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)runFrameAndProcessVideo:(BOOL)processVideo
 {
+    if (![self isGameLoaded])
+    {
+        return;
+    }
+    
     if (system_hw == SYSTEM_MCD)
     {
         system_frame_scd(!processVideo);
@@ -176,6 +196,11 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)saveGameSaveToURL:(NSURL *)URL
 {
+    if (![self isGameLoaded])
+    {
+        return;
+    }
+    
     NSData *saveData = [NSData dataWithBytes:sram.sram length:GPGXGameSaveSize];
     
     NSError *error = nil;
@@ -190,6 +215,11 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)loadGameSaveFromURL:(NSURL *)URL
 {
+    if (![self isGameLoaded])
+    {
+        return;
+    }
+    
     NSError *error = nil;
     NSData *saveData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
     if (saveData == nil)
@@ -206,6 +236,11 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)saveSaveStateToURL:(NSURL *)URL
 {
+    if (![self isGameLoaded])
+    {
+        return;
+    }
+    
     NSMutableData *saveStateData = [NSMutableData dataWithLength:STATE_SIZE];
     state_save(saveStateData.mutableBytes);
     
@@ -219,6 +254,11 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)loadSaveStateFromURL:(NSURL *)URL
 {
+    if (![self isGameLoaded])
+    {
+        return;
+    }
+    
     NSError *error = nil;
     NSData *saveStateData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
     if (saveStateData == nil)
