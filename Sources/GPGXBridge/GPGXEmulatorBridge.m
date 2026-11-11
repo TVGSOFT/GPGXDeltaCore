@@ -76,41 +76,50 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)startWithGameURL:(NSURL *)gameURL
 {
-    self.gameLoaded = NO;
-    
-    set_config_defaults();
-    
-    /* initialize bitmap */
-    memset(&bitmap, 0, sizeof(bitmap));
-    bitmap.width      = GPGXVideoWidth;
-    bitmap.height     = GPGXVideoHeight;
-    bitmap.pitch      = bitmap.width * sizeof(uint32_t);
-    bitmap.data       = (uint8_t *)self.videoBuffer.mutableBytes;
-    
-    if (!load_rom((char *)gameURL.fileSystemRepresentation))
+    // The bridge is a process-wide singleton shared by every EmulatorCore, and each core only
+    // serializes its own calls. Lock here so a stop/start can never free or reallocate emulator
+    // memory while another thread is inside a frame or a save.
+    @synchronized (self)
     {
-        NSLog(@"Failed to load ROM: %@", gameURL);
-        return;
+        self.gameLoaded = NO;
+    
+        set_config_defaults();
+    
+        /* initialize bitmap */
+        memset(&bitmap, 0, sizeof(bitmap));
+        bitmap.width      = GPGXVideoWidth;
+        bitmap.height     = GPGXVideoHeight;
+        bitmap.pitch      = bitmap.width * sizeof(uint32_t);
+        bitmap.data       = (uint8_t *)self.videoBuffer.mutableBytes;
+    
+        if (!load_rom((char *)gameURL.fileSystemRepresentation))
+        {
+            NSLog(@"Failed to load ROM: %@", gameURL);
+            return;
+        }
+    
+        if (audio_init(48000, vdp_pal ? GPGXFramesPerSecondPAL : GPGXFramesPerSecondNTSC) != 0)
+        {
+            NSLog(@"Failed to initialize audio for ROM: %@", gameURL);
+            audio_shutdown();
+            return;
+        }
+    
+        system_init();
+        system_reset();
+    
+        self.gameLoaded = YES;
     }
-    
-    if (audio_init(48000, vdp_pal ? GPGXFramesPerSecondPAL : GPGXFramesPerSecondNTSC) != 0)
-    {
-        NSLog(@"Failed to initialize audio for ROM: %@", gameURL);
-        audio_shutdown();
-        return;
-    }
-    
-    system_init();
-    system_reset();
-    
-    self.gameLoaded = YES;
 }
 
 - (void)stop
 {
-    self.gameLoaded = NO;
+    @synchronized (self)
+    {
+        self.gameLoaded = NO;
     
-    audio_shutdown();
+        audio_shutdown();
+    }
 }
 
 - (void)pause
@@ -125,37 +134,40 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)runFrameAndProcessVideo:(BOOL)processVideo
 {
-    if (![self isGameLoaded])
+    @synchronized (self)
     {
-        return;
-    }
+        if (![self isGameLoaded])
+        {
+            return;
+        }
     
-    if (system_hw == SYSTEM_MCD)
-    {
-        system_frame_scd(!processVideo);
-    }
-    else if ((system_hw & SYSTEM_PBC) == SYSTEM_MD)
-    {
-        system_frame_gen(!processVideo);
-    }
-    else
-    {
-        system_frame_sms(!processVideo);
-    }
+        if (system_hw == SYSTEM_MCD)
+        {
+            system_frame_scd(!processVideo);
+        }
+        else if ((system_hw & SYSTEM_PBC) == SYSTEM_MD)
+        {
+            system_frame_gen(!processVideo);
+        }
+        else
+        {
+            system_frame_sms(!processVideo);
+        }
     
-    CGRect viewport = CGRectMake(bitmap.viewport.x, bitmap.viewport.y, bitmap.viewport.w, bitmap.viewport.h);
-    if (!CGRectEqualToRect(viewport, self.videoRenderer.viewport))
-    {
-        self.videoRenderer.viewport = viewport;
-    }
+        CGRect viewport = CGRectMake(bitmap.viewport.x, bitmap.viewport.y, bitmap.viewport.w, bitmap.viewport.h);
+        if (!CGRectEqualToRect(viewport, self.videoRenderer.viewport))
+        {
+            self.videoRenderer.viewport = viewport;
+        }
         
-    int samples = audio_update(self.audioBuffer.mutableBytes);
-    [self.audioRenderer.audioBuffer writeBuffer:self.audioBuffer.mutableBytes size:samples * 4];
+        int samples = audio_update(self.audioBuffer.mutableBytes);
+        [self.audioRenderer.audioBuffer writeBuffer:self.audioBuffer.mutableBytes size:samples * 4];
     
-    if (processVideo)
-    {
-        memcpy(self.videoRenderer.videoBuffer, self.videoBuffer.mutableBytes, self.videoBuffer.length);
-        [self.videoRenderer processFrame];
+        if (processVideo)
+        {
+            memcpy(self.videoRenderer.videoBuffer, self.videoBuffer.mutableBytes, self.videoBuffer.length);
+            [self.videoRenderer processFrame];
+        }
     }
 }
 
@@ -196,78 +208,90 @@ int GPGXGameSaveSize = 0x10000;
 
 - (void)saveGameSaveToURL:(NSURL *)URL
 {
-    if (![self isGameLoaded])
+    @synchronized (self)
     {
-        return;
+        if (![self isGameLoaded])
+        {
+            return;
+        }
+    
+        NSData *saveData = [NSData dataWithBytes:sram.sram length:GPGXGameSaveSize];
+    
+        NSError *error = nil;
+        if (![saveData writeToURL:URL options:NSDataWritingAtomic error:&error])
+        {
+            NSLog(@"[GPGXDeltaCore] Error saving Game Save to %@. %@", URL, error);
+            return;
+        }
+    
+        sram.crc = (unsigned int)crc32(0, sram.sram, GPGXGameSaveSize);
     }
-    
-    NSData *saveData = [NSData dataWithBytes:sram.sram length:GPGXGameSaveSize];
-    
-    NSError *error = nil;
-    if (![saveData writeToURL:URL options:NSDataWritingAtomic error:&error])
-    {
-        NSLog(@"[GPGXDeltaCore] Error saving Game Save to %@. %@", URL, error);
-        return;
-    }
-    
-    sram.crc = (unsigned int)crc32(0, sram.sram, GPGXGameSaveSize);
 }
 
 - (void)loadGameSaveFromURL:(NSURL *)URL
 {
-    if (![self isGameLoaded])
+    @synchronized (self)
     {
-        return;
-    }
+        if (![self isGameLoaded])
+        {
+            return;
+        }
     
-    NSError *error = nil;
-    NSData *saveData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
-    if (saveData == nil)
-    {
-        NSLog(@"[GPGXDeltaCore] Error loading Game Save from %@. %@", URL, error);
-        return;
-    }
+        NSError *error = nil;
+        NSData *saveData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
+        if (saveData == nil)
+        {
+            NSLog(@"[GPGXDeltaCore] Error loading Game Save from %@. %@", URL, error);
+            return;
+        }
     
-    memcpy(sram.sram, saveData.bytes, GPGXGameSaveSize);
-    sram.crc = (unsigned int)crc32(0, sram.sram, GPGXGameSaveSize);
+        memcpy(sram.sram, saveData.bytes, GPGXGameSaveSize);
+        sram.crc = (unsigned int)crc32(0, sram.sram, GPGXGameSaveSize);
+    }
 }
 
 #pragma mark - Save States -
 
 - (void)saveSaveStateToURL:(NSURL *)URL
 {
-    if (![self isGameLoaded])
+    @synchronized (self)
     {
-        return;
-    }
+        if (![self isGameLoaded])
+        {
+            return;
+        }
     
-    NSMutableData *saveStateData = [NSMutableData dataWithLength:STATE_SIZE];
-    state_save(saveStateData.mutableBytes);
+        NSMutableData *saveStateData = [NSMutableData dataWithLength:STATE_SIZE];
+        state_save(saveStateData.mutableBytes);
     
-    NSError *error = nil;
-    if (![saveStateData writeToURL:URL options:NSDataWritingAtomic error:&error])
-    {
-        NSLog(@"[GPGXDeltaCore] Error saving Save State to %@. %@", URL, error);
-        return;
+        NSError *error = nil;
+        if (![saveStateData writeToURL:URL options:NSDataWritingAtomic error:&error])
+        {
+            NSLog(@"[GPGXDeltaCore] Error saving Save State to %@. %@", URL, error);
+            return;
+        }
     }
 }
 
 - (void)loadSaveStateFromURL:(NSURL *)URL
 {
-    if (![self isGameLoaded])
+    @synchronized (self)
     {
-        return;
-    }
+        if (![self isGameLoaded])
+        {
+            return;
+        }
     
-    NSError *error = nil;
-    NSData *saveStateData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
-    if (saveStateData == nil)
-    {
-        NSLog(@"[GPGXDeltaCore] Error loading Save State from %@. %@", URL, error);
-        return;
-    }
+        NSError *error = nil;
+        NSData *saveStateData = [NSData dataWithContentsOfURL:URL options:0 error:&error];
+        if (saveStateData == nil)
+        {
+            NSLog(@"[GPGXDeltaCore] Error loading Save State from %@. %@", URL, error);
+            return;
+        }
     
-    state_load((unsigned char *)saveStateData.bytes);
+        state_load((unsigned char *)saveStateData.bytes);
+    }
 }
 
 #pragma mark - Cheats -
